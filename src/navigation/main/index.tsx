@@ -4,7 +4,7 @@ import Home from '../home'
 
 const Main = () => {
 
-    let isAuth:boolean = false
+    let isAuth:boolean = true
 
   return (
     <NavigationContainer>
