@@ -56,7 +56,7 @@ const Login = (props:loginScreenProps) => {
         <Button size="lg" backgroundColor={THEME.colors.primaryOne}>
           Login
         </Button>
-        <View style={{marginTop:5, alignItems:"center", flexDirection:"row", justifyContent:'center'}}>
+        <View style={{marginTop:10, alignItems:"center", flexDirection:"row", justifyContent:'center'}}>
               <Text style={{fontSize:12, fontWeight:'400', color:'#A0A0A0'}}>
                 Don’t have an account?
               </Text>  

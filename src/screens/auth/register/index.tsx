@@ -104,7 +104,7 @@ const Register = (props:registerScreenProps) => {
           <Button size="lg" backgroundColor={THEME.colors.primaryOne} marginTop={5}>
             Login
           </Button>
-          <View style={{marginTop:5, alignItems:"center", flexDirection:"row", justifyContent:'center'}}>
+          <View style={{marginTop:10, alignItems:"center", flexDirection:"row", justifyContent:'center'}}>
                 <Text style={{fontSize:12, fontWeight:'400', color:'#A0A0A0'}}>
                   Already have an account?
                 </Text>  
