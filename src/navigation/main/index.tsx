@@ -8,7 +8,7 @@ const Main = () => {
 
   return (
     <NavigationContainer>
-      {isAuth ? <Auth/> : <Home/> }  
+      {!isAuth ? <Auth/> : <Home/> }  
     </NavigationContainer>
   )
 }

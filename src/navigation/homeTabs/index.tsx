@@ -21,13 +21,13 @@ const HomeTabs = () => {
         let color:string = '#808D9E';
 
         if (route.name === 'AccountScreen') {
-          color = focused ? THEME.colors.primary : theme.colors.black;
+          color = focused ? THEME.colors.primaryOne : theme.colors.black;
         } else if(route.name === 'PortFolioScreen'){
           iconName = 'swap-horizontal-outline';
-          color = focused ? THEME.colors.primary : theme.colors.black;
+          color = focused ? THEME.colors.primaryOne : theme.colors.black;
         }else if(route.name === 'TradeScreen'){
           iconName = 'pie-chart-outline'
-          color = focused ? THEME.colors.primary : theme.colors.black;
+          color = focused ? THEME.colors.primaryOne : theme.colors.black;
         }
         
         return  <Icon name={iconName} size={size} color={color} style={{marginTop:5}}/> ;
