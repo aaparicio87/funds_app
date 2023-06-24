@@ -10,14 +10,17 @@ import GraphSolarFunds from '../../../assets/svg/GraphSolarFunds';
 import GraphNatureFunds from '../../../assets/svg/GraphNatureFunds';
 import BusinessStadistic from '../../../assets/svg/BusinessStadistic';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { accountScreenProps } from '../../../types/screens/home';
+import { HomeStackParamList } from '../../../types/navigation/home';
 
 interface IPropsItem {
   icon: React.ElementType,
   graph:React.ElementType,
   title:string,
+  route:string
 }
 
-const AccountScreen = () => {
+const AccountScreen = (props:accountScreenProps) => {
   const styles = useStylesAccount()
 
   const DATA = [
@@ -26,31 +29,30 @@ const AccountScreen = () => {
         icon: ()=> <Feather name='wind' color='#4A88D0' />,
         graph:()=><GraphWindFunds/>,
         title: 'Wind Fund',
-        route:""
+        route:"AssetDetailScreen"
     },
     {
         id: '58694a0f-3da1-471f-bd96-145571e29d723',
         icon: ()=> <Feather name='sun' color='#F0A719' />,
         graph:()=><GraphSolarFunds/>,
         title: 'Solar Fund',
-        route:""
+        route:"AssetDetailScreen"
     },
     {
         id: '58694a0f-3da1-471f-bd96-145571e29d734',
         icon: ()=> <Feather name='sun' color='#0FDF8F' />,
         graph:()=><GraphNatureFunds/>,
         title: 'Nature',
-        route:""
+        route:"AssetDetailScreen"
     },
     ];    
 
-  const Item = ({icon:IconItem, title, graph:Graph}:IPropsItem) => (
+  const Item = ({icon:IconItem, title, graph:Graph, route}:IPropsItem) => (
     <View style={{alignItems:"center"}}>
       <TouchableHighlight 
         activeOpacity={0.6}
         underlayColor={THEME.colors.grey}
-        onPress={()=>{
-        }}
+        onPress={()=>props.navigation.navigate(route as keyof HomeStackParamList)}
       >
         <View style={{width:145, height:145, borderColor:'#E6E6E6', borderWidth:1, borderRadius:4, paddingHorizontal:10, justifyContent:'space-around'}}>
             <IconItem/>
@@ -118,6 +120,7 @@ const AccountScreen = () => {
                                 icon={item.icon} 
                                 title={item.title}
                                 graph={item.graph}
+                                route={item.route}
                               />
                     }}
                     keyExtractor={item => item.id}

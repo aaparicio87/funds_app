@@ -3,5 +3,5 @@ export type HomeStackParamList = {
     TradeScreen:undefined
     PortFolioScreen:undefined 
     Account: undefined
-
+    AssetDetailScreen:undefined
 };
