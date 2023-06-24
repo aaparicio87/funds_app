@@ -5,12 +5,72 @@ import { Button, Checkbox, FormControl, Input, Pressable, theme } from 'native-b
 import Icon from 'react-native-vector-icons/Ionicons';
 import { THEME } from '../../../styles';
 import { registerScreenProps } from '../../../types/screens/auth/login';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+
+interface IRegister{
+  firstName:string
+  lastName:string
+  email:string
+  password:string
+  terms:boolean
+}
+
+export const REGEX_NAME = /^[a-zA-ZÀ-ÖÙ-öù-ÿĀ-žḀ-ỿ\s\-\/.]+$/
+export const REGEX_PASSWORD = /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/
 
 const Register = (props:registerScreenProps) => {
-  
+
   const styles = useStylesRegister()
   const [show, setShow] = useState(false)
   const [checked, setChecked] = useState(false)
+
+  const initialValues: IRegister = {
+    email:'',
+    firstName:'',
+    lastName:'',
+    password:'',
+    terms:false
+  }
+
+  const validationSchema = yup.object().shape({
+    firstName: yup
+     .string()
+     .matches(REGEX_NAME, "Please enter valid name")
+     .min(3, "Minimum 3 characters")
+     .max(50, "Maximum 50 characters")
+     .required( "First name is required"),
+   lastName: yup
+     .string()
+     .matches(REGEX_NAME,"Please enter valid last name")
+     .min(3, "Minimum 3 characters")
+     .max(50, "Maximum 50 characters")
+     .required("Last name is required"),
+    email: yup
+     .string()
+     .email('Please enter valid e-mail')
+     .max(50, 'Maximum 50 characters')
+     .lowercase()
+     .required('E-mail is required'),
+    password: yup
+     .string()
+     .matches(
+       REGEX_PASSWORD,
+       '"Must contain at least 8 characters, one uppercase, one lowercase, one number and a special character"')
+     .required('Password is required'),
+     terms: yup
+      .boolean().required().oneOf([true], 'Must accept Terms of services and Privacy policy'),    
+ })
+
+  
+
+  const formik = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit: (values)=>{
+     props.navigation.navigate('RegisterFinished')
+  }});  
+  
 
   return (
     <View style={styles.container}>
@@ -32,7 +92,13 @@ const Register = (props:registerScreenProps) => {
                 md: "25%"
               }}  
               placeholder="john@doe.com" 
+              onChangeText={formik.handleChange('firstName')}
+              value={formik.values.firstName}
+              onBlur={formik.handleBlur('firstName')}
             />
+            <FormControl.ErrorMessage>
+              {formik.errors.firstName}
+            </FormControl.ErrorMessage>
             <FormControl.Label>
               <Text style={{color:'#A0A0A0', fontSize:11, fontWeight:'400'}}>
                 Last Name
@@ -44,8 +110,14 @@ const Register = (props:registerScreenProps) => {
               w={{
                 md: "25%"
               }}  
-              placeholder="john@doe.com" 
+              placeholder="john@doe.com"
+              onChangeText={formik.handleChange('lastName')}
+              value={formik.values.lastName}
+              onBlur={formik.handleBlur('lastName')} 
             />
+            <FormControl.ErrorMessage>
+              {formik.errors.lastName}
+            </FormControl.ErrorMessage>
             <FormControl.Label>
               <Text style={{color:'#A0A0A0', fontSize:11, fontWeight:'400'}}>
                 Email
@@ -58,7 +130,13 @@ const Register = (props:registerScreenProps) => {
                 md: "25%"
               }}  
               placeholder="john@doe.com" 
+              onChangeText={formik.handleChange('email')}
+              value={formik.values.email}
+              onBlur={formik.handleBlur('email')}
             />
+            <FormControl.ErrorMessage>
+              {formik.errors.email}
+            </FormControl.ErrorMessage>
             <FormControl.Label>
             <Text style={{color:'#A0A0A0', fontSize:11, fontWeight:'400'}}>
               Password
@@ -74,12 +152,21 @@ const Register = (props:registerScreenProps) => {
                 <Pressable onPress={() => setShow(!show)}>
                   <Icon name={`${show ? 'eye-outline' : 'eye-off-outline'}`} color={THEME.colors.grey} size={22} style={{margin:5}}/>
                 </Pressable>} 
-              placeholder="Minimum 8 characters" 
+              placeholder="Minimum 8 characters"
+              onChangeText={formik.handleChange('password')}
+              value={formik.values.password}
+              onBlur={formik.handleBlur('password')} 
             />
+            <FormControl.ErrorMessage>
+              {formik.errors.password}
+            </FormControl.ErrorMessage>
               <Checkbox
                 marginTop={5} 
                 isChecked={checked} 
-                onChange={() => setChecked(!checked)} 
+                onChange={() => {
+                  setChecked(!checked)
+                  formik.setFieldValue('terms', !checked)
+                }} 
                 value=''
               > 
                <View style={{alignItems:'center'}}>
@@ -98,10 +185,18 @@ const Register = (props:registerScreenProps) => {
                    </View>
                 </View>
               </Checkbox>
+              <FormControl.ErrorMessage>
+                {formik.errors.terms}
+              </FormControl.ErrorMessage>
         </FormControl>    
       </View>
       <View style={{flex:1}}>
-          <Button size="lg" backgroundColor={THEME.colors.primaryOne} marginTop={5}>
+          <Button 
+            size="lg" 
+            backgroundColor={THEME.colors.primaryOne} 
+            marginTop={5}
+            onPress={() => formik.handleSubmit()}
+          >
             Login
           </Button>
           <View style={{marginTop:10, alignItems:"center", flexDirection:"row", justifyContent:'center'}}>

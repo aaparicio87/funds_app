@@ -40,19 +40,19 @@ const HomeTabs = () => {
          <Tab.Screen 
           name="AccountScreen" 
           component={AccountScreen} 
-          options={{headerShown:false}}
+          options={{headerShown:false, title:'Home'}}
         />
 
          <Tab.Screen 
           name='PortFolioScreen' 
           component={PortFolioScreen}
-          options={{headerShown:false}} 
+          options={{headerShown:false, title:'Trade'}} 
         />
 
          <Tab.Screen 
           name='TradeScreen'
           component={TradeScreen}
-          options={{headerShown:false}}  
+          options={{headerShown:false, title:'Portfolio'}}  
          />
 
          

@@ -3,6 +3,7 @@ import React from 'react'
 import { AuthStackParamList } from '../../types/navigation/auth';
 import Login from '../../screens/auth/login';
 import Register from '../../screens/auth/register';
+import RegisterFinished from '../../screens/auth/registerFinished';
 
 
 const Stack = createNativeStackNavigator<AuthStackParamList>();
@@ -22,6 +23,8 @@ const Auth = () => {
     >
       <Stack.Screen name='Login' component={Login}/>
       <Stack.Screen name='Register' component={Register}/>  
+      <Stack.Screen name='RegisterFinished' component={RegisterFinished}/>
+      
     </Stack.Navigator>
   )
 }

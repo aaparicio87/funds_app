@@ -1,4 +1,5 @@
 export type AuthStackParamList = {
     Login: undefined
-    Register: undefined
+    Register: undefined,
+    RegisterFinished:undefined
 };
